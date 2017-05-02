@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="1">
+
+    <EditText
+        android:id="@+id/exName"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/addWorkoutValExercise" />
+
+    <Button
+        android:id="@+id/addSet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+ Set" />
+
+    <Button
+        android:id="@+id/subtractSet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="- Set" />
+
+</LinearLayout>

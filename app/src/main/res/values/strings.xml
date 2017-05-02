@@ -3,6 +3,18 @@
     <string name="add_workout">add a workout</string>
     <string name="set_alert">set an alert</string>
     <string name="home">return to home menu</string>
+
+    fragment_home
     <string name="gotoWorkoutButton">Workouts</string>
     <string name="gotoAlarmButton">Alarms</string>
+
+    add_workout
+    <string name="addWOHeader">Add an Exercise</string>
+    <string name="submit">Submit Workout</string>
+    <string name="addWorkoutValName">Name your workout</string>
+    <string name="addWorkoutValExercise">Exercise Name</string>
+    <string name="addWorkoutValWeight">Weight</string>
+    <string name="addWorkoutValReps">Reps</string>
+
+
 </resources>
