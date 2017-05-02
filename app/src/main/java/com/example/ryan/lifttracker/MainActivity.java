@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
     private Fragment homeScreenFragment, workoutFragment, taskFragment;
 
-    private SharedPreferences prefs;
     private FragmentManager fragmentManager;
 
     private SharedPreferences prefs;
@@ -35,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         setContentView(R.layout.activity_main);
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         fragmentManager = getSupportFragmentManager();
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         taskFragment = (TaskFragment) fragmentManager.findFragmentByTag(TaskFragment.TAG_TASK_FRAGMENT);
 
@@ -58,14 +56,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
     }
 
-    // inside on resume you need to tell the retained fragment to start the service
-    @Override
-    public void onResume(){
-        super.onResume();
-
-        ((RetainedFragmentInteraction)taskFragment).startBackgroundServiceNeeded();
-    }
-
     @Override
     public void changeFragment(String fragment_name) {
 
@@ -76,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
             fragmentClass = WorkoutFragment.class;
 
             Log.d("HW2", "workout fragment selected");
-        } //TODO: replace with add Workout Fragment
+        }
         else if(fragment_name.equals(AddWorkoutFragment.TAG_ADD_WORKOUT_FRAGMENT)){
             fragmentClass = AddWorkoutFragment.class;
 
@@ -124,9 +114,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         int id = item.getItemId();
 
         if (id == R.id.action_home) {
-
+            changeFragment(HomeScreenFragment.TAG_HOME_FRAGMENT);
         }
         else if (id == R.id.action_set_alert) {
+            //Set an alert
 
         }
 
@@ -137,6 +128,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
             startActivity(intent);
             finish();
 
+        }
+
+        else if (id == R.id.action_add_workout) {
+            //Add a workout
+            changeFragment(AddWorkoutFragment.TAG_ADD_WORKOUT_FRAGMENT);
         }
 
         return super.onOptionsItemSelected(item);
