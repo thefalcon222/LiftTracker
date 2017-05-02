@@ -18,6 +18,7 @@ import com.example.ryan.lifttracker.interfaces.HomeScreenInteraction;
 public class HomeScreenFragment extends Fragment implements View.OnClickListener {
 
     public static final String TAG_HOME_FRAGMENT = "home_fragment";
+    private HomeScreenInteraction activity;
 
     public static HomeScreenFragment newInstance() {
         HomeScreenFragment fragment = new HomeScreenFragment();
