@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/setAlarms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Set Workout Reminders"
+        android:textSize="30sp" />
+
+    <CheckBox
+        android:id="@+id/sundayCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sunday" />
+
+    <CheckBox
+        android:id="@+id/mondayCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Monday" />
+
+    <CheckBox
+        android:id="@+id/tuesdayCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tuesday" />
+
+    <CheckBox
+        android:id="@+id/wednesdayCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wednesday" />
+
+    <CheckBox
+        android:id="@+id/thursdayCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thursday" />
+
+    <CheckBox
+        android:id="@+id/fridayCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Friday" />
+
+    <CheckBox
+        android:id="@+id/saturdayCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Saturday" />
+</LinearLayout>
