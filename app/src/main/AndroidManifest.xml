@@ -25,9 +25,4 @@
         </activity>
     </application>
 
-    <service
-        android:name="ryan.lifttracker.services.BackgroundService"
-        android:enabled="true" >
-    </service>
-
 </manifest>

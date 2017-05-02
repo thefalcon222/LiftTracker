@@ -20,7 +20,7 @@ import com.example.ryan.lifttracker.interfaces.ActivityInteraction;
 import com.example.ryan.lifttracker.interfaces.HomeScreenInteraction;
 import com.example.ryan.lifttracker.interfaces.RetainedFragmentInteraction;
 
-public class MainActivity extends AppCompatActivity implements HomeScreenInteraction,ActivityInteraction {
+public class MainActivity extends AppCompatActivity implements HomeScreenInteraction, ActivityInteraction {
 
     private Fragment homeScreenFragment, workoutFragment, taskFragment;
 
@@ -46,11 +46,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         if (savedInstanceState == null) {
             homeScreenFragment = new HomeScreenFragment();
             // Set dashboard fragment to be the default fragment shown
-            ((RetainedFragmentInteraction)taskFragment).setActiveFragmentTag(HomeScreenFragment.TAG_HOME_FRAGMENT);
-            fragmentManager.beginTransaction().replace(R.id.Frame, homeScreenFragment ).commit();
+            ((RetainedFragmentInteraction) taskFragment).setActiveFragmentTag(HomeScreenFragment.TAG_HOME_FRAGMENT);
+            fragmentManager.beginTransaction().replace(R.id.Frame, homeScreenFragment).commit();
         } else {
             //workoutFragment = fragmentManager.findFragmentByTag(WorkoutFragment.TAG_WORKOUT_FRAGMENT);
-            ((RetainedFragmentInteraction)taskFragment).setActiveFragmentTag(WorkoutFragment.TAG_WORKOUT_FRAGMENT);
+            ((RetainedFragmentInteraction) taskFragment).setActiveFragmentTag(WorkoutFragment.TAG_WORKOUT_FRAGMENT);
             workoutFragment = fragmentManager.findFragmentByTag(WorkoutFragment.TAG_WORKOUT_FRAGMENT);
         }
 
@@ -62,12 +62,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
         Fragment fragment;
         Class fragmentClass = null;
-        if(fragment_name.equals(WorkoutFragment.TAG_WORKOUT_FRAGMENT)){
+        if (fragment_name.equals(WorkoutFragment.TAG_WORKOUT_FRAGMENT)) {
             fragmentClass = WorkoutFragment.class;
 
             Log.d("HW2", "workout fragment selected");
-        }
-        else if(fragment_name.equals(AddWorkoutFragment.TAG_ADD_WORKOUT_FRAGMENT)){
+        } else if (fragment_name.equals(AddWorkoutFragment.TAG_ADD_WORKOUT_FRAGMENT)) {
             fragmentClass = AddWorkoutFragment.class;
 
             Log.d("HW2", "add workout fragment selected");
@@ -78,11 +77,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
                 fragment = (Fragment) fragmentClass.newInstance();
 
 
-
-                FragmentTransaction ft= fragmentManager.beginTransaction();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
 
                 ft.replace(R.id.Frame, fragment,
-                        ((RetainedFragmentInteraction)taskFragment).getActiveFragmentTag());
+                        ((RetainedFragmentInteraction) taskFragment).getActiveFragmentTag());
                 ft.addToBackStack(null);
                 ft.commit();
 
@@ -115,22 +113,17 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
         if (id == R.id.action_home) {
             changeFragment(HomeScreenFragment.TAG_HOME_FRAGMENT);
-        }
-        else if (id == R.id.action_set_alert) {
+        } else if (id == R.id.action_set_alert) {
             //Set an alert
 
-        }
-
-        else if (id == R.id.action_logout) {
+        } else if (id == R.id.action_logout) {
             // Log the user out
             prefs.edit().remove("status").apply();
             Intent intent = new Intent(getBaseContext(), LoginActivity.class);
             startActivity(intent);
             finish();
 
-        }
-
-        else if (id == R.id.action_add_workout) {
+        } else if (id == R.id.action_add_workout) {
             //Add a workout
             changeFragment(AddWorkoutFragment.TAG_ADD_WORKOUT_FRAGMENT);
         }

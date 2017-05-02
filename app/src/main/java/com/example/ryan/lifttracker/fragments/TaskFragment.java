@@ -1,18 +1,13 @@
 package com.example.ryan.lifttracker.fragments;
 
-import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-
-import com.example.ryan.lifttracker.constants.Constants;
 import com.example.ryan.lifttracker.interfaces.ActivityInteraction;
 import com.example.ryan.lifttracker.interfaces.RetainedFragmentInteraction;
 
 /**
- * Created by Andrey on 2/16/2017.
+ * Created by Andrew on 5/2/2017.
  */
 
 public class TaskFragment extends Fragment implements RetainedFragmentInteraction {
@@ -20,7 +15,7 @@ public class TaskFragment extends Fragment implements RetainedFragmentInteractio
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (ActivityInteraction)context;
+        activity = (ActivityInteraction) context;
     }
 
     public static final String TAG_TASK_FRAGMENT = "task_fragment";
@@ -50,8 +45,6 @@ public class TaskFragment extends Fragment implements RetainedFragmentInteractio
     @Override
     public void onResume() {
         super.onResume();
-
-
     }
 
 
