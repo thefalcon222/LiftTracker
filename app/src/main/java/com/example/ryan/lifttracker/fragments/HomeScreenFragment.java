@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.ryan.lifttracker.R;
 import com.example.ryan.lifttracker.interfaces.HomeScreenInteraction;
@@ -19,6 +20,7 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
 
     public static final String TAG_HOME_FRAGMENT = "home_fragment";
     private HomeScreenInteraction activity;
+    private ImageButton workoutButton, alarmButton;
 
     public static HomeScreenFragment newInstance() {
         HomeScreenFragment fragment = new HomeScreenFragment();
@@ -56,6 +58,12 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        workoutButton = (ImageButton) view.findViewById(R.id.workoutButton);
+        alarmButton = (ImageButton) view.findViewById(R.id.alarmButton);
+
+        workoutButton.setOnClickListener(this);
+        alarmButton.setOnClickListener(this);
+
 
         return view;
 
@@ -65,6 +73,15 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
+
+        if(view.equals(workoutButton))
+        {
+            activity.changeFragment(WorkoutFragment.TAG_WORKOUT_FRAGMENT);
+        }
+        if(view.equals(alarmButton))
+        {
+            //activity.changeFragment();
+        }
 
     }
 }
