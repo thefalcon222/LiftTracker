@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
     private Fragment homeScreenFragment, workoutFragment, taskFragment;
 
-    private SharedPreferences prefs;
     private FragmentManager fragmentManager;
 
     private SharedPreferences prefs;
@@ -35,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         setContentView(R.layout.activity_main);
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         fragmentManager = getSupportFragmentManager();
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         taskFragment = (TaskFragment) fragmentManager.findFragmentByTag(TaskFragment.TAG_TASK_FRAGMENT);
 
