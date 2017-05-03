@@ -2,6 +2,7 @@ package com.example.ryan.lifttracker.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.ryan.lifttracker.R;
 import com.example.ryan.lifttracker.data.WorkoutItem;
+import com.example.ryan.lifttracker.database.DBConstants;
 import com.example.ryan.lifttracker.database.DBController;
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class WorkoutFragment extends Fragment{
     private ArrayList<WorkoutItem> workouts;
 
     private ListView memberList;
-    private WorkoutItemArrayAdapter teamMemberListAdapter;
+    private WorkoutItemArrayAdapter workoutListAdapter;
 
     private DBController database_controller;
 
@@ -95,13 +97,32 @@ public class WorkoutFragment extends Fragment{
 
         Cursor cursor = null;
         // Lets initiate the database controller
-        database_controller = new DBController(this.getContext(), this.getActivity().getApplication());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            database_controller = new DBController(this.getContext(), this.getActivity().getApplication());
+        }
         database_controller.OpenDB();
         cursor = database_controller.pullWorkouts();
 
+        do
+        {
+            //Add the date, followed by appropriate spacing
+            String date =cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_DATE_NAME));
+
+            //Add the name of the workout, followed by appropriate spacing
+            String name =cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_WORKOUT_NAME));
+
+            //Add the description of the workout, followed by appropriate spacing
+            String description = cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_DESCRIPTION_NAME));
+
+            //Add the number of reps, and then a newline for the next entry
+            String reps = cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_REPS_NAME));
+            workouts.add(new WorkoutItem(date,name,description,reps));
+
+        } while (cursor.moveToNext());
+
         memberList = (ListView)view.findViewById(R.id.workouts);
-        teamMemberListAdapter= new WorkoutItemArrayAdapter(getActivity(), R.layout.workout_item, workouts);
-        memberList.setAdapter(teamMemberListAdapter);
+        workoutListAdapter= new WorkoutItemArrayAdapter(getActivity(), R.layout.workout_item, workouts);
+        memberList.setAdapter(workoutListAdapter);
 
 
 
