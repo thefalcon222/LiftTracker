@@ -28,7 +28,20 @@ import static com.example.ryan.lifttracker.constants.Constants.TUESDAY;
 import static com.example.ryan.lifttracker.constants.Constants.WEDNESDAY;
 
 /**
- * Created by conor on 5/2/2017.
+ * Created by Conor Ginnell
+ *
+ * AlarmSetActivity launches when the user selects Set Alarm.  It provides them
+ * with an option to set alarms for different days of the week.  When these
+ * days are selected, the AlarmManager sets an Alarm to go off at approximately
+ * 12:00 P.M. on the specified days, and repeat that Alarm every specified day
+ * at 12:00 P.M. until the user deselects the day.
+ *
+ * User preferences on which days are set are stored in SharedPreferences using
+ * the days of the week as keys, and booleans as values.
+ *
+ * The Activity maintains an ArrayList of days of the week that are set.  This
+ * may be redundant.  The Receiver also maintains an ArrayList of Pending
+ * Intents, one for each day of the week.
  */
 
 public class AlarmSetActivity extends AppCompatActivity{
@@ -48,6 +61,17 @@ public class AlarmSetActivity extends AppCompatActivity{
     private SharedPreferences.Editor editor;
 
 
+    /**
+     * Written by Conor Ginnell
+     *
+     * OnCreate Lifecycle method.  Reads from SharedPreferences to see which
+     * days of the week are set.  If the SharedPreferences doesn't exist yet,
+     * set to false by default.
+     *
+     * Identify CheckBoxes, preset their values, and set their onClickListeners
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -210,6 +234,13 @@ public class AlarmSetActivity extends AppCompatActivity{
         presetBox(SATURDAY, satBox);
     }
 
+    /**
+     * Written by Conor Ginnell
+     *
+     * setAlarm sets alarms on the day given in the parameters.
+     * @param dayNum integer from 0-6 corresponding to the day of the week.
+     * @param weekDay integer from 1-7 corresponding to the day of the week.
+     */
     public void setAlarm(int dayNum, int weekDay) {
 
         alarmSetList.set(dayNum, true);
@@ -221,11 +252,27 @@ public class AlarmSetActivity extends AppCompatActivity{
                 INTERVAL_WEEK, pendingIntentList.get(dayNum));
     }
 
+    /**
+     * Written by Conor Ginnell
+     *
+     * unsetAlarm unsets an alarm on the day given in the parameter.
+     * @param dayNum integer from 0-6 corresponding to the day of the week.
+     */
     public void unsetAlarm(int dayNum) {
         alarmSetList.set(dayNum, false);
         alarmManager.cancel(pendingIntentList.get(dayNum));
     }
 
+    /**
+     * Written by Conor Ginnell
+     *
+     * presetBox runs in onCreate and reads from SharedPreferences to preset
+     * the CheckBox views to the corresponding selected days.  This ensures
+     * that the user's preferences on what days alarms are set on is maintained
+     * so that the user doesn't accidentally set more than one alarm.
+     * @param key name of the day, e.g. SUNDAY, MONDAY, FRIDAY
+     * @param c CheckBox to be preset (or not preset)
+     */
     public void presetBox(String key, CheckBox c) {
         Log.d("PresetBox Debug", "" + key + " is " + prefs.getBoolean(key, false));
         if (prefs.getBoolean(key, false)) {
@@ -236,6 +283,13 @@ public class AlarmSetActivity extends AppCompatActivity{
         }
     }
 
+    /**
+     * Written by Conor Ginnell
+     *
+     * Debugging method that reads SharedPreferences and outputs whether or not
+     * each day is set.  Had some issues checking whether or not CheckBoxes
+     * were selected or not.
+     */
     public void checkSharedPreferences() {
         Log.d("DBSP", "Sunday: " + prefs.getBoolean(SUNDAY, false));
         Log.d("DBSP", "Monday: " + prefs.getBoolean(MONDAY, false));

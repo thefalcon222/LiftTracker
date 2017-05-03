@@ -3,7 +3,10 @@ package com.example.ryan.lifttracker.constants;
 import android.app.AlarmManager;
 
 /**
- * Created by conor on 5/3/2017.
+ * Written by Conor Ginnell
+ *
+ * Contains constants used throughout the app, especially strings
+ * representing the days of the week.
  */
 
 public class Constants {
