@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -24,6 +23,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".AlarmSetActivity"/>
+
+        <receiver android:name=".AlarmReceiver"
+            android:enabled="true">
+        </receiver>
+
     </application>
 
 </manifest>

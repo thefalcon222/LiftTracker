@@ -13,11 +13,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import com.example.ryan.lifttracker.constants.Constants;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import static android.Manifest.permission_group.CALENDAR;
-import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.example.ryan.lifttracker.constants.Constants.FRIDAY;
+import static com.example.ryan.lifttracker.constants.Constants.INTERVAL_WEEK;
+import static com.example.ryan.lifttracker.constants.Constants.MONDAY;
+import static com.example.ryan.lifttracker.constants.Constants.SATURDAY;
+import static com.example.ryan.lifttracker.constants.Constants.SUNDAY;
+import static com.example.ryan.lifttracker.constants.Constants.THURSDAY;
+import static com.example.ryan.lifttracker.constants.Constants.TUESDAY;
+import static com.example.ryan.lifttracker.constants.Constants.WEDNESDAY;
 
 /**
  * Created by conor on 5/2/2017.
@@ -25,19 +33,19 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class AlarmSetActivity extends AppCompatActivity{
 
-    CheckBox sunBox;
-    CheckBox monBox;
-    CheckBox tueBox;
-    CheckBox wedBox;
-    CheckBox thuBox;
-    CheckBox friBox;
-    CheckBox satBox;
-    Button closeButton;
-    ArrayList<Boolean> alarmSetList;
-    ArrayList<PendingIntent> pendingIntentList;
-    AlarmManager alarmManager;
-    SharedPreferences prefs;
-    SharedPreferences.Editor editor;
+    private CheckBox sunBox;
+    private CheckBox monBox;
+    private CheckBox tueBox;
+    private CheckBox wedBox;
+    private CheckBox thuBox;
+    private CheckBox friBox;
+    private CheckBox satBox;
+    private Button closeButton;
+    private ArrayList<Boolean> alarmSetList;
+    private ArrayList<PendingIntent> pendingIntentList;
+    private AlarmManager alarmManager;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
 
 
     @Override
@@ -51,13 +59,13 @@ public class AlarmSetActivity extends AppCompatActivity{
 
         //Create & Set alarmSetList
         alarmSetList = new ArrayList<>(7);
-        alarmSetList.add(prefs.getBoolean("Sunday", false));
-        alarmSetList.add(prefs.getBoolean("Monday", false));
-        alarmSetList.add(prefs.getBoolean("Tuesday", false));
-        alarmSetList.add(prefs.getBoolean("Wednesday", false));
-        alarmSetList.add(prefs.getBoolean("Thursday", false));
-        alarmSetList.add(prefs.getBoolean("Friday", false));
-        alarmSetList.add(prefs.getBoolean("Saturday", false));
+        alarmSetList.add(prefs.getBoolean(SUNDAY, false));
+        alarmSetList.add(prefs.getBoolean(MONDAY, false));
+        alarmSetList.add(prefs.getBoolean(TUESDAY, false));
+        alarmSetList.add(prefs.getBoolean(WEDNESDAY, false));
+        alarmSetList.add(prefs.getBoolean(THURSDAY, false));
+        alarmSetList.add(prefs.getBoolean(FRIDAY, false));
+        alarmSetList.add(prefs.getBoolean(SATURDAY, false));
 
         //Create AlarmManager and pendingIntentList
         alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
@@ -89,9 +97,9 @@ public class AlarmSetActivity extends AppCompatActivity{
                     //Log.d("DBSP", "selected is " + selected);
                     unsetAlarm(0);
                 }
-                editor.putBoolean("Sunday", alarmSetList.get(0));
-                editor.commit();
-                //checkSharedPreferences();
+                editor.putBoolean(SUNDAY, alarmSetList.get(0));
+                editor.apply();
+                
             }
         });
 
@@ -105,8 +113,8 @@ public class AlarmSetActivity extends AppCompatActivity{
                 else {
                     unsetAlarm(1);
                 }
-                editor.putBoolean("Monday", alarmSetList.get(1));
-                editor.commit();
+                editor.putBoolean(MONDAY, alarmSetList.get(1));
+                editor.apply();
             }
         });
 
@@ -120,8 +128,8 @@ public class AlarmSetActivity extends AppCompatActivity{
                 else {
                     unsetAlarm(2);
                 }
-                editor.putBoolean("Tuesday", alarmSetList.get(2));
-                editor.commit();
+                editor.putBoolean(TUESDAY, alarmSetList.get(2));
+                editor.apply();
             }
         });
 
@@ -135,8 +143,8 @@ public class AlarmSetActivity extends AppCompatActivity{
                 else {
                     unsetAlarm(3);
                 }
-                editor.putBoolean("Wednesday", alarmSetList.get(3));
-                editor.commit();
+                editor.putBoolean(WEDNESDAY, alarmSetList.get(3));
+                editor.apply();
             }
         });
 
@@ -150,8 +158,8 @@ public class AlarmSetActivity extends AppCompatActivity{
                 else {
                     unsetAlarm(4);
                 }
-                editor.putBoolean("Thursday", alarmSetList.get(4));
-                editor.commit();
+                editor.putBoolean(THURSDAY, alarmSetList.get(4));
+                editor.apply();
             }
         });
 
@@ -165,8 +173,8 @@ public class AlarmSetActivity extends AppCompatActivity{
                 else {
                     unsetAlarm(5);
                 }
-                editor.putBoolean("Friday", alarmSetList.get(5));
-                editor.commit();
+                editor.putBoolean(FRIDAY, alarmSetList.get(5));
+                editor.apply();
             }
         });
 
@@ -180,8 +188,8 @@ public class AlarmSetActivity extends AppCompatActivity{
                 else {
                     unsetAlarm(6);
                 }
-                editor.putBoolean("Saturday", alarmSetList.get(6));
-                editor.commit();
+                editor.putBoolean(SATURDAY, alarmSetList.get(6));
+                editor.apply();
             }
         });
 
@@ -193,33 +201,29 @@ public class AlarmSetActivity extends AppCompatActivity{
         });
 
         //Read Preferences and pre-set checkmarks
-        presetBox("Sunday", sunBox);
-        presetBox("Monday", monBox);
-        presetBox("Tuesday", tueBox);
-        presetBox("Wednesday", wedBox);
-        presetBox("Thursday", thuBox);
-        presetBox("Friday", friBox);
-        presetBox("Saturday", satBox);
+        presetBox(SUNDAY, sunBox);
+        presetBox(MONDAY, monBox);
+        presetBox(TUESDAY, tueBox);
+        presetBox(WEDNESDAY, wedBox);
+        presetBox(THURSDAY, thuBox);
+        presetBox(FRIDAY, friBox);
+        presetBox(SATURDAY, satBox);
     }
 
-    public void setAlarm(int dayNum, int calendarDay) {
+    public void setAlarm(int dayNum, int weekDay) {
 
         alarmSetList.set(dayNum, true);
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(System.currentTimeMillis());
-        c.set(Calendar.DAY_OF_WEEK, calendarDay);
+        c.set(Calendar.DAY_OF_WEEK, weekDay);
         c.set(Calendar.HOUR_OF_DAY, 12);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
-                7 * AlarmManager.INTERVAL_DAY, pendingIntentList.get(dayNum));
-
-        checkSharedPreferences();
+                INTERVAL_WEEK, pendingIntentList.get(dayNum));
     }
 
     public void unsetAlarm(int dayNum) {
         alarmSetList.set(dayNum, false);
         alarmManager.cancel(pendingIntentList.get(dayNum));
-
-        checkSharedPreferences();
     }
 
     public void presetBox(String key, CheckBox c) {
@@ -233,12 +237,12 @@ public class AlarmSetActivity extends AppCompatActivity{
     }
 
     public void checkSharedPreferences() {
-        Log.d("DBSP", "Sunday: " + prefs.getBoolean("Sunday", false));
-        Log.d("DBSP", "Monday: " + prefs.getBoolean("Monday", false));
-        Log.d("DBSP", "Tuesday: " + prefs.getBoolean("Tuesday", false));
-        Log.d("DBSP", "Wednesday: " + prefs.getBoolean("Wednesday", false));
-        Log.d("DBSP", "Thursday: " + prefs.getBoolean("Thursday", false));
-        Log.d("DBSP", "Friday: " + prefs.getBoolean("Friday", false));
-        Log.d("DBSP", "Saturday: " + prefs.getBoolean("Saturday", false));
+        Log.d("DBSP", "Sunday: " + prefs.getBoolean(SUNDAY, false));
+        Log.d("DBSP", "Monday: " + prefs.getBoolean(MONDAY, false));
+        Log.d("DBSP", "Tuesday: " + prefs.getBoolean(TUESDAY, false));
+        Log.d("DBSP", "Wednesday: " + prefs.getBoolean(WEDNESDAY, false));
+        Log.d("DBSP", "Thursday: " + prefs.getBoolean(THURSDAY, false));
+        Log.d("DBSP", "Friday: " + prefs.getBoolean(FRIDAY, false));
+        Log.d("DBSP", "Saturday: " + prefs.getBoolean(SATURDAY, false));
     }
 }

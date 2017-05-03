@@ -8,54 +8,54 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Set Workout Reminders"
+        android:text="@string/set_alert"
         android:textSize="30sp" />
 
     <CheckBox
         android:id="@+id/sundayCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sunday" />
+        android:text="@string/sunday" />
 
     <CheckBox
         android:id="@+id/mondayCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Monday" />
+        android:text="@string/monday" />
 
     <CheckBox
         android:id="@+id/tuesdayCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tuesday" />
+        android:text="@string/tuesday" />
 
     <CheckBox
         android:id="@+id/wednesdayCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Wednesday" />
+        android:text="@string/wednesday" />
 
     <CheckBox
         android:id="@+id/thursdayCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thursday" />
+        android:text="@string/thursday" />
 
     <CheckBox
         android:id="@+id/fridayCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Friday" />
+        android:text="@string/friday" />
 
     <CheckBox
         android:id="@+id/saturdayCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Saturday" />
+        android:text="@string/saturday" />
 
     <Button
         android:id="@+id/closeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Close" />
+        android:text="@string/close" />
 </LinearLayout>

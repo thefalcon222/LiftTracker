@@ -1,9 +1,16 @@
 <resources>
-    <string name="app_name">LiftTracker</string>
-    <string name="add_workout">add a workout</string>
-    <string name="set_alert">set an alert</string>
-    <string name="home">return to home menu</string>
-
+    <string name="app_name">Hoist</string>
+    <string name="add_workout">Add Workout</string>
+    <string name="set_alert">Set Alerts</string>
+    <string name="home">Home</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="close">Close</string>
 
     fragment_home
     <string name="gotoWorkoutButton">Workouts</string>
