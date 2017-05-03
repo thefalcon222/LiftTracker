@@ -1,6 +1,8 @@
 package com.example.ryan.lifttracker.fragments;
 
+import android.content.ContentValues;
 import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,8 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ryan.lifttracker.R;
+import com.example.ryan.lifttracker.database.DBConstants;
+import com.example.ryan.lifttracker.database.DBController;
 
 import static com.example.ryan.lifttracker.R.layout.add_workout;
 
@@ -29,6 +34,7 @@ public class AddWorkoutFragment extends Fragment implements View.OnClickListener
     private EditText workoutName, workoutDescription;
     private TextView workoutReps;
     private int reps;
+    private DBController database_controller;
 
     public static AddWorkoutFragment newInstance() {
         AddWorkoutFragment fragment = new AddWorkoutFragment();
@@ -89,16 +95,36 @@ public class AddWorkoutFragment extends Fragment implements View.OnClickListener
             case R.id.submitWButton:
                 // Something something send to database
                 Calendar c = null;
+                String date = "1/1/1";
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                     c = Calendar.getInstance();
-                    String date = DateFormat.format("MMMM d, yyyy ", c.getTime()).toString();
+                    date = DateFormat.format("MMMM d, yyyy ", c.getTime()).toString();
                 }
                 String name = workoutName.getText().toString();
                 String description = workoutDescription.getText().toString();
                 String repString = workoutReps.getText().toString();
 
                 //add to database
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    database_controller = new DBController(this.getContext(), this.getActivity().getApplication());
+                }
+                database_controller.OpenDB();
 
+                ContentValues values = new ContentValues();
+                values.put(DBConstants.COLUMN_DATE_NAME,date);
+                values.put(DBConstants.COLUMN_DESCRIPTION_NAME,description);
+                values.put(DBConstants.COLUMN_REPS_NAME,repString);
+                values.put(DBConstants.COLUMN_WORKOUT_NAME,name);
+                database_controller.insert(values);
+
+                database_controller.CloseDB();
+                database_controller = null;
+
+                workoutDescription.setText("");
+                workoutReps.setText("");
+                workoutName.setText("");
+                Log.d("Hoist", "workout saved");
+                Toast.makeText(this.getContext(), "Workout Logged", Toast.LENGTH_LONG).show();
                 break;
             case R.id.addSet:
                 reps++;
@@ -106,6 +132,8 @@ public class AddWorkoutFragment extends Fragment implements View.OnClickListener
                 break;
             case R.id.subtractSet:
                 reps--;
+                if(reps<0)
+                    reps=0;
                 workoutReps.setText(reps + " reps");
                 break;
 

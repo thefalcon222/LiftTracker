@@ -122,10 +122,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
         } else if (id == R.id.action_logout) {
             // Log the user out
-            prefs.edit().remove("status").apply();
+           /* prefs.edit().remove("status").apply();
             Intent intent = new Intent(getBaseContext(), LoginActivity.class);
             startActivity(intent);
-            finish();
+            finish();*/
 
         } else if (id == R.id.action_add_workout) {
             //Add a workout

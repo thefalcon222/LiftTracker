@@ -133,6 +133,8 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
 
             } while (cursor.moveToNext());
         }
+        controller.CloseDB();
+        controller = null;
 
         //We then finish the email body
         email_body.append("\nFrom the creators of the Hoist App:");

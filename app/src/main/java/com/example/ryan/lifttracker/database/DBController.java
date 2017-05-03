@@ -50,4 +50,9 @@ public class DBController {
     {
         return db.rawQuery("SELECT * FROM " + DBConstants.TABLE_NAME, null);
     }
+
+    public void insert(ContentValues values)
+    {
+        db.insert(DBConstants.TABLE_NAME,null,values);
+    }
 }

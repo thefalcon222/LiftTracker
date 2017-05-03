@@ -122,13 +122,15 @@ public class WorkoutFragment extends Fragment{
                 workouts.add(new WorkoutItem(date, name, description, reps));
 
             } while (cursor.moveToNext());
+            database_controller.CloseDB();
+            database_controller = null;
         }
 
             //test code
+            /*workouts.add(new WorkoutItem("date", "name ", "description", "reps"));
             workouts.add(new WorkoutItem("date", "name ", "description", "reps"));
             workouts.add(new WorkoutItem("date", "name ", "description", "reps"));
-            workouts.add(new WorkoutItem("date", "name ", "description", "reps"));
-            workouts.add(new WorkoutItem("date", "name ", "description", "reps"));
+            workouts.add(new WorkoutItem("date", "name ", "description", "reps"));//*/
 
             memberList = (ListView) view.findViewById(R.id.workouts);
             Log.d("HW2", "workoutItemArrayAdapter  told to start");
