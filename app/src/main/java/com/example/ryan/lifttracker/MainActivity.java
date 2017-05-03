@@ -114,7 +114,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         if (id == R.id.action_home) {
             changeFragment(HomeScreenFragment.TAG_HOME_FRAGMENT);
         } else if (id == R.id.action_set_alert) {
-            //Set an alert
+            Intent i = new Intent(this, AlarmSetActivity.class);
+            startActivity(i);
 
         } else if (id == R.id.action_logout) {
             // Log the user out

@@ -52,4 +52,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Saturday" />
+
+    <Button
+        android:id="@+id/closeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Close" />
 </LinearLayout>

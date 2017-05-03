@@ -4,6 +4,7 @@
     <string name="set_alert">set an alert</string>
     <string name="home">return to home menu</string>
 
+
     fragment_home
     <string name="gotoWorkoutButton">Workouts</string>
     <string name="gotoAlarmButton">Alarms</string>
