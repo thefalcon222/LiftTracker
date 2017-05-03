@@ -50,5 +50,4 @@ public class DBController {
     {
         return db.rawQuery("SELECT * FROM " + DBConstants.TABLE_NAME, null);
     }
-
 }

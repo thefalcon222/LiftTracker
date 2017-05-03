@@ -8,12 +8,12 @@ import static android.R.id.message;
  * Created by Andrew Walters on 5/2/2017.
  */
 
-public class createEmail
+public class CreateEmail
 {
 
     Intent chooser;
 
-    public createEmail(String to, String subject)
+    public CreateEmail(String to, String subject, String message)
     {
         Intent email = new Intent(Intent.ACTION_SEND);
         email.putExtra(Intent.EXTRA_EMAIL, new String[]{to});
@@ -31,5 +31,4 @@ public class createEmail
         return chooser;
     }
 }
-
 
