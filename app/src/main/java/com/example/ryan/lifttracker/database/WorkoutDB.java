@@ -19,7 +19,7 @@ public class WorkoutDB extends SQLiteOpenHelper{
             + DBConstants.COLUMN_DATE_NAME +" text,"
             + DBConstants.COLUMN_WORKOUT_NAME+" text,"
             +DBConstants.COLUMN_DESCRIPTION_NAME +" text,"
-            +DBConstants.COLUMN_REPS_NAME +" text";
+            +DBConstants.COLUMN_REPS_NAME +" text)";
 
 
     public WorkoutDB(Context context) {
