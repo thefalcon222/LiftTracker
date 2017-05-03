@@ -42,8 +42,19 @@ public class AddWorkoutFragment extends Fragment implements View.OnClickListener
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
 
+        View view = inflater.inflate(R.layout.add_workout, container, false);
+
+        LinearLayout fillUp = (LinearLayout) view.findViewById(R.id.exercise_container);
+        LinearLayout fillSets = (LinearLayout) view.findViewById(R.id.row_container);
+
+        View rowFiller = (View) inflater.inflate(R.layout.exercise_rows, null);
+        fillSets.addView(rowFiller);
+        View exFiller = (View) inflater.inflate(R.layout.exercise_details, null);
+        fillUp.addView(exFiller);
+
+
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
