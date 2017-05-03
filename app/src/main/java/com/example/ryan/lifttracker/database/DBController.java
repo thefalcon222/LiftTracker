@@ -3,6 +3,7 @@ package com.example.ryan.lifttracker.database;
 import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import java.util.ArrayList;
@@ -43,6 +44,11 @@ public class DBController {
         for (int i = 0; i < workout_list.size(); i++) {
             db.insert(DBConstants.TABLE_NAME, null, workout_list.get(i));
         }
+    }
+
+    public Cursor pullWorkouts()
+    {
+        return db.rawQuery("SELECT * FROM " + DBConstants.TABLE_NAME, null);
     }
 
 }

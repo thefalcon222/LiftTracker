@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.ryan.lifttracker.R;
 import com.example.ryan.lifttracker.data.WorkoutItem;
+import com.example.ryan.lifttracker.database.DBController;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,8 @@ public class WorkoutFragment extends Fragment{
 
     private ListView memberList;
     private WorkoutItemArrayAdapter teamMemberListAdapter;
+
+    private DBController database_controller;
 
 
     public static WorkoutFragment newInstance() {
@@ -89,8 +93,11 @@ public class WorkoutFragment extends Fragment{
 
         workouts = new ArrayList<WorkoutItem>();
 
-        //test code
-        workouts.add(new WorkoutItem("2/5/15","running","ran","10 km"));
+        Cursor cursor = null;
+        // Lets initiate the database controller
+        database_controller = new DBController(getApplicationContext(), this, getApplication());
+        database_controller.OpenDB();
+        cursor = database_controller.pullWorkouts();
 
         memberList = (ListView)view.findViewById(R.id.workouts);
         teamMemberListAdapter= new WorkoutItemArrayAdapter(getActivity(), R.layout.workout_item, workouts);
