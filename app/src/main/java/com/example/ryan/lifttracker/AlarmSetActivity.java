@@ -58,10 +58,10 @@ public class AlarmSetActivity extends AppCompatActivity{
     private CheckBox friBox;
     private CheckBox satBox;
     private Button closeButton;
-    private ArrayList<Boolean> alarmSetList;
-    private ArrayList<PendingIntent> pendingIntentList;
-    private AlarmManager alarmManager;
-    private SharedPreferences prefs;
+    private static ArrayList<Boolean> alarmSetList;
+    private static ArrayList<PendingIntent> pendingIntentList;
+    private static AlarmManager alarmManager;
+    private static SharedPreferences prefs;
     private SharedPreferences.Editor editor;
 
 
@@ -257,6 +257,7 @@ public class AlarmSetActivity extends AppCompatActivity{
         presetBox(FRIDAY, friBox);
         presetBox(SATURDAY, satBox);
 
+        /**
         // Register Local Broadcast Receiver
         if (!prefs.getBoolean("BootReceiver", false)) {
             Log.d("BC Debug", "Registered BootReceiver");
@@ -268,6 +269,7 @@ public class AlarmSetActivity extends AppCompatActivity{
         else {
             Log.d("BC Debug", "BootReceiver already registered.");
         }
+         */
     }
 
     /**
@@ -277,7 +279,7 @@ public class AlarmSetActivity extends AppCompatActivity{
      * @param dayNum integer from 0-6 corresponding to the day of the week.
      * @param weekDay integer from 1-7 corresponding to the day of the week.
      */
-    public void setAlarm(int dayNum, int weekDay) {
+    public static void setAlarm(int dayNum, int weekDay) {
 
         alarmSetList.set(dayNum, true);
         Calendar c = Calendar.getInstance();
@@ -342,7 +344,7 @@ public class AlarmSetActivity extends AppCompatActivity{
      * BroadcastReceiver that runs on boot.
      * Resets alarms based on SharedPreferences.
      */
-    private final BroadcastReceiver bootReceiver = new BroadcastReceiver() {
+    public static class BootReceiver extends BroadcastReceiver {
 
 
         @Override
@@ -362,7 +364,7 @@ public class AlarmSetActivity extends AppCompatActivity{
 
                 if (prefs == null) {
                     Log.d("BD Debug", "Prefs was null on Boot.");
-                    prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    prefs = PreferenceManager.getDefaultSharedPreferences(context);
                 }
                 if (alarmSetList == null) {
                     Log.d("BD Debug", "AlarmSetList was null on Boot.");
@@ -377,15 +379,15 @@ public class AlarmSetActivity extends AppCompatActivity{
                 }
                 if (alarmManager == null) {
                     Log.d("BD Debug", "AlarmManager was null on Boot.");
-                    alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                    alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
                 }
                 if (pendingIntentList == null) {
                     Log.d("BD Debug", "PendingIntentList was null on Boot.");
                     pendingIntentList = new ArrayList<>(7);
-                    Intent arIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
+                    Intent arIntent = new Intent(context, AlarmReceiver.class);
                     for (int i = 0; i < 7; i++) {
                         pendingIntentList.add(PendingIntent.getBroadcast(
-                                getApplicationContext(), 0, arIntent, 0));
+                                context, 0, arIntent, 0));
                     }
                 }
                 if(prefs.getBoolean(SUNDAY, false)) {
