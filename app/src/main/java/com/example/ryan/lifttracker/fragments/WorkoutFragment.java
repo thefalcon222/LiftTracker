@@ -8,6 +8,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.database.Cursor;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,17 +66,18 @@ public class WorkoutFragment extends Fragment{
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            Log.d("HW2", "workoutItemArrayAdapter started");
             View rowView = inflater.inflate(R.layout.workout_item, parent, false);
 
-            TextView name = (TextView) rowView.findViewById(R.id.workout_name);
-            TextView reps = (TextView) rowView.findViewById(R.id.workout_reps);
+            TextView name = (TextView) rowView.findViewById(R.id.name);
+            TextView reps = (TextView) rowView.findViewById(R.id.reps);
             TextView date = (TextView) rowView.findViewById(R.id.date);
-            TextView description = (TextView) rowView.findViewById(R.id.workout_description);
+            TextView description = (TextView) rowView.findViewById(R.id.description);
 
-            name.setText(items.get(position).getName());
-            date.setText(items.get(position).getDate());
-            reps.setText(items.get(position).getReps());
-            description.setText(items.get(position).getDescription());
+            name.setText(items.get(position).getName()+"");
+            date.setText(items.get(position).getDate()+"");
+            reps.setText(items.get(position).getReps()+"");
+            description.setText(items.get(position).getDescription()+"");
 
             return rowView;
         }
@@ -102,27 +104,36 @@ public class WorkoutFragment extends Fragment{
         }
         database_controller.OpenDB();
         cursor = database_controller.pullWorkouts();
+        cursor.moveToFirst();
+        if(!cursor.isAfterLast() && cursor != null) {
 
-        do
-        {
-            //Add the date, followed by appropriate spacing
-            String date =cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_DATE_NAME));
+            do {
+                //Add the date, followed by appropriate spacing
+                String date = cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_DATE_NAME));
 
-            //Add the name of the workout, followed by appropriate spacing
-            String name =cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_WORKOUT_NAME));
+                //Add the name of the workout, followed by appropriate spacing
+                String name = cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_WORKOUT_NAME));
 
-            //Add the description of the workout, followed by appropriate spacing
-            String description = cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_DESCRIPTION_NAME));
+                //Add the description of the workout, followed by appropriate spacing
+                String description = cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_DESCRIPTION_NAME));
 
-            //Add the number of reps, and then a newline for the next entry
-            String reps = cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_REPS_NAME));
-            workouts.add(new WorkoutItem(date,name,description,reps));
+                //Add the number of reps, and then a newline for the next entry
+                String reps = cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_REPS_NAME));
+                workouts.add(new WorkoutItem(date, name, description, reps));
 
-        } while (cursor.moveToNext());
+            } while (cursor.moveToNext());
+        }
 
-        memberList = (ListView)view.findViewById(R.id.workouts);
-        workoutListAdapter= new WorkoutItemArrayAdapter(getActivity(), R.layout.workout_item, workouts);
-        memberList.setAdapter(workoutListAdapter);
+            //test code
+            workouts.add(new WorkoutItem("date", "name ", "description", "reps"));
+            workouts.add(new WorkoutItem("date", "name ", "description", "reps"));
+            workouts.add(new WorkoutItem("date", "name ", "description", "reps"));
+            workouts.add(new WorkoutItem("date", "name ", "description", "reps"));
+
+            memberList = (ListView) view.findViewById(R.id.workouts);
+            Log.d("HW2", "workoutItemArrayAdapter  told to start");
+            workoutListAdapter = new WorkoutItemArrayAdapter(getActivity(), R.layout.workout_item, workouts);
+            memberList.setAdapter(workoutListAdapter);
 
 
 
