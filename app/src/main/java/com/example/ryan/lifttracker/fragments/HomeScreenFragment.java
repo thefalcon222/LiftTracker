@@ -112,25 +112,26 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
 
         //We pull each entry, placing it into a customized String
         //The loop will run until it reaches the last entry
-        do
-        {
-            //Add the date, followed by appropriate spacing
-            email_body.append(cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_DATE_NAME)));
-            email_body.append("  ");
+        if(!cursor.isAfterLast()) {
+            do {
+                //Add the date, followed by appropriate spacing
+                email_body.append(cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_DATE_NAME)));
+                email_body.append("  ");
 
-            //Add the name of the workout, followed by appropriate spacing
-            email_body.append(cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_WORKOUT_NAME)));
-            email_body.append("  ");
+                //Add the name of the workout, followed by appropriate spacing
+                email_body.append(cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_WORKOUT_NAME)));
+                email_body.append("  ");
 
-            //Add the description of the workout, followed by appropriate spacing
-            email_body.append(cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_DESCRIPTION_NAME)));
-            email_body.append("  ");
+                //Add the description of the workout, followed by appropriate spacing
+                email_body.append(cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_DESCRIPTION_NAME)));
+                email_body.append("  ");
 
-            //Add the number of reps, and then a newline for the next entry
-            email_body.append(cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_REPS_NAME)));
-            email_body.append("\n");
+                //Add the number of reps, and then a newline for the next entry
+                email_body.append(cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_REPS_NAME)));
+                email_body.append("\n");
 
-        } while (cursor.moveToNext());
+            } while (cursor.moveToNext());
+        }
 
         //We then finish the email body
         email_body.append("\nFrom the creators of the Hoist App:");
