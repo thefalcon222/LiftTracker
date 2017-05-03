@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.ryan.lifttracker.R;
+import com.example.ryan.lifttracker.constants.Constants;
 import com.example.ryan.lifttracker.interfaces.HomeScreenInteraction;
 
 /**
@@ -83,5 +84,18 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
             //activity.changeFragment();
         }
 
+    }
+
+    //Happens when you hit the "Send Email" button
+    public void sendEmail()
+    {
+        String from = Constants.email_from;
+        String to = Constants.email_to;
+        String subject = Constants.email_subject;
+
+        //We build a string by pulling all database entries into a specific format
+        StringBuilder email_body = new StringBuilder();
+
+        
     }
 }
