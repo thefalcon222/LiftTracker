@@ -1,6 +1,8 @@
 package com.example.ryan.lifttracker.fragments;
 
+import android.app.Application;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,8 @@ import android.widget.ImageButton;
 
 import com.example.ryan.lifttracker.R;
 import com.example.ryan.lifttracker.constants.Constants;
+import com.example.ryan.lifttracker.database.DBConstants;
+import com.example.ryan.lifttracker.database.DBController;
 import com.example.ryan.lifttracker.interfaces.HomeScreenInteraction;
 
 /**
@@ -95,7 +99,36 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
 
         //We build a string by pulling all database entries into a specific format
         StringBuilder email_body = new StringBuilder();
+        DBController controller = new DBController(this.getContext(), this.getActivity().getApplication());
+        controller.OpenDB();
 
-        
+        //Create the initial email body
+        email_body.append("Hello Mark,\n\nThe following email is from the Hoist App.  Below is the list of workouts that have been selected:\n\n");
+
+        //We create a cursor to point to all of the pulled entries
+        Cursor cursor = controller.pullWorkouts();
+        cursor.moveToFirst();
+
+        //We pull each entry, placing it into a customized String
+        //The loop will run until it reaches the last entry
+        do
+        {
+            //Add the date, followed by appropriate spacing
+            email_body.append(cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_DATE_NAME)));
+            email_body.append("  ");
+
+            //Add the name of the workout, followed by appropriate spacing
+            email_body.append(cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_WORKOUT_NAME)));
+            email_body.append("  ");
+
+            //Add the description of the workout, followed by appropriate spacing
+            email_body.append(cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_DESCRIPTION_NAME)));
+            email_body.append("  ");
+
+            //Add the number of reps, and then a newline for the next entry
+            email_body.append(cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_REPS_NAME)));
+            email_body.append("\n");
+
+        } while (cursor.moveToNext());
     }
 }

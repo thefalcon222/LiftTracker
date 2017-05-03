@@ -95,7 +95,7 @@ public class WorkoutFragment extends Fragment{
 
         Cursor cursor = null;
         // Lets initiate the database controller
-        database_controller = new DBController(getApplicationContext(), this, getApplication());
+        database_controller = new DBController(this.getContext(), this.getActivity().getApplication());
         database_controller.OpenDB();
         cursor = database_controller.pullWorkouts();
 
