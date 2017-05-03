@@ -26,7 +26,7 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
 
     public static final String TAG_HOME_FRAGMENT = "home_fragment";
     private HomeScreenInteraction activity;
-    private ImageButton workoutButton, alarmButton;
+    private ImageButton workoutButton, emailButton;
 
     public static HomeScreenFragment newInstance() {
         HomeScreenFragment fragment = new HomeScreenFragment();
@@ -65,10 +65,10 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         workoutButton = (ImageButton) view.findViewById(R.id.workoutButton);
-        alarmButton = (ImageButton) view.findViewById(R.id.alarmButton);
+        emailButton = (ImageButton) view.findViewById(R.id.emailButton);
 
         workoutButton.setOnClickListener(this);
-        alarmButton.setOnClickListener(this);
+        emailButton.setOnClickListener(this);
 
 
         return view;
@@ -84,9 +84,9 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
         {
             activity.changeFragment(WorkoutFragment.TAG_WORKOUT_FRAGMENT);
         }
-        if(view.equals(alarmButton))
+        if(view.equals(emailButton))
         {
-            //activity.changeFragment();
+            //activity.changeFragment(EmailFragment);
         }
 
     }
