@@ -1,9 +1,13 @@
 package com.example.ryan.lifttracker;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -82,24 +86,43 @@ public class AlarmSetActivity extends AppCompatActivity{
         editor = prefs.edit();
 
         //Create & Set alarmSetList
-        alarmSetList = new ArrayList<>(7);
-        alarmSetList.add(prefs.getBoolean(SUNDAY, false));
-        alarmSetList.add(prefs.getBoolean(MONDAY, false));
-        alarmSetList.add(prefs.getBoolean(TUESDAY, false));
-        alarmSetList.add(prefs.getBoolean(WEDNESDAY, false));
-        alarmSetList.add(prefs.getBoolean(THURSDAY, false));
-        alarmSetList.add(prefs.getBoolean(FRIDAY, false));
-        alarmSetList.add(prefs.getBoolean(SATURDAY, false));
-
-        //Create AlarmManager and pendingIntentList
-        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-
-        pendingIntentList = new ArrayList<>(7);
-        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
-        for (int i = 0; i < 7; i++) {
-            pendingIntentList.add(PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0));
+        if (alarmSetList == null) {
+            Log.d("BD Debug", "AlarmSetList was null on Create.");
+            alarmSetList = new ArrayList<>(7);
+            alarmSetList.add(prefs.getBoolean(SUNDAY, false));
+            alarmSetList.add(prefs.getBoolean(MONDAY, false));
+            alarmSetList.add(prefs.getBoolean(TUESDAY, false));
+            alarmSetList.add(prefs.getBoolean(WEDNESDAY, false));
+            alarmSetList.add(prefs.getBoolean(THURSDAY, false));
+            alarmSetList.add(prefs.getBoolean(FRIDAY, false));
+            alarmSetList.add(prefs.getBoolean(SATURDAY, false));
+        }
+        else {
+            Log.d("BD Debug", "AlarmSetList was not null on Create.");
         }
 
+        //Create AlarmManager and pendingIntentList
+        if (alarmManager == null) {
+            Log.d("BD Debug", "AlarmManager was null on Create.");
+            alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        }
+        else {
+            Log.d("BD Debug", "AlarmManager was not null on Create.");
+        }
+
+        if (pendingIntentList == null) {
+            Log.d("BD Debug", "PendingIntentList was null on Create.");
+            pendingIntentList = new ArrayList<>(7);
+            Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
+            for (int i = 0; i < 7; i++) {
+                pendingIntentList.add(PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0));
+            }
+        }
+        else {
+            Log.d("BD Debug", "PendingIntentList was not null on Create.");
+        }
+
+        // Identify UI Elements
         sunBox = (CheckBox)findViewById(R.id.sundayCheckBox);
         monBox = (CheckBox)findViewById(R.id.mondayCheckBox);
         tueBox = (CheckBox)findViewById(R.id.tuesdayCheckBox);
@@ -109,6 +132,7 @@ public class AlarmSetActivity extends AppCompatActivity{
         satBox = (CheckBox)findViewById(R.id.saturdayCheckBox);
         closeButton = (Button)findViewById(R.id.closeButton);
 
+        // Set onClickListeners
         sunBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,6 +256,18 @@ public class AlarmSetActivity extends AppCompatActivity{
         presetBox(THURSDAY, thuBox);
         presetBox(FRIDAY, friBox);
         presetBox(SATURDAY, satBox);
+
+        // Register Local Broadcast Receiver
+        if (!prefs.getBoolean("BootReceiver", false)) {
+            Log.d("BC Debug", "Registered BootReceiver");
+            IntentFilter f = new IntentFilter(Intent.ACTION_BOOT_COMPLETED);
+            registerReceiver(bootReceiver, f);
+            editor.putBoolean("BootReceiver", true);
+            editor.apply();
+        }
+        else {
+            Log.d("BC Debug", "BootReceiver already registered.");
+        }
     }
 
     /**
@@ -299,4 +335,88 @@ public class AlarmSetActivity extends AppCompatActivity{
         Log.d("DBSP", "Friday: " + prefs.getBoolean(FRIDAY, false));
         Log.d("DBSP", "Saturday: " + prefs.getBoolean(SATURDAY, false));
     }
+
+    /**
+     * Written by Conor Ginnell
+     *
+     * BroadcastReceiver that runs on boot.
+     * Resets alarms based on SharedPreferences.
+     */
+    private final BroadcastReceiver bootReceiver = new BroadcastReceiver() {
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")); {
+                Log.d("BR Debug", "Entered onReceive in bootReceiver");
+
+                Notification noti = new Notification.Builder(context)
+                        .setContentTitle("Hoist")
+                        .setContentText("Phone Booted!")
+                        .setSmallIcon(R.drawable.hoist)
+                        .build();
+
+                int mNotificationId = 002;
+                NotificationManager mNotifyMgr = (NotificationManager)context.getSystemService(NOTIFICATION_SERVICE);
+                mNotifyMgr.notify(mNotificationId, noti);
+
+                if (prefs == null) {
+                    Log.d("BD Debug", "Prefs was null on Boot.");
+                    prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                }
+                if (alarmSetList == null) {
+                    Log.d("BD Debug", "AlarmSetList was null on Boot.");
+                    alarmSetList = new ArrayList<>(7);
+                    alarmSetList.add(prefs.getBoolean(SUNDAY, false));
+                    alarmSetList.add(prefs.getBoolean(MONDAY, false));
+                    alarmSetList.add(prefs.getBoolean(TUESDAY, false));
+                    alarmSetList.add(prefs.getBoolean(WEDNESDAY, false));
+                    alarmSetList.add(prefs.getBoolean(THURSDAY, false));
+                    alarmSetList.add(prefs.getBoolean(FRIDAY, false));
+                    alarmSetList.add(prefs.getBoolean(SATURDAY, false));
+                }
+                if (alarmManager == null) {
+                    Log.d("BD Debug", "AlarmManager was null on Boot.");
+                    alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                }
+                if (pendingIntentList == null) {
+                    Log.d("BD Debug", "PendingIntentList was null on Boot.");
+                    pendingIntentList = new ArrayList<>(7);
+                    Intent arIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
+                    for (int i = 0; i < 7; i++) {
+                        pendingIntentList.add(PendingIntent.getBroadcast(
+                                getApplicationContext(), 0, arIntent, 0));
+                    }
+                }
+                if(prefs.getBoolean(SUNDAY, false)) {
+                    Log.d("BD Debug", "Setting Sunday alarm in Boot.");
+                    setAlarm(0, Calendar.SUNDAY);
+                }
+                if(prefs.getBoolean(MONDAY, false)) {
+                    Log.d("BD Debug", "Setting Monday alarm in Boot.");
+                    setAlarm(1, Calendar.MONDAY);
+                }
+                if(prefs.getBoolean(TUESDAY, false)) {
+                    Log.d("BD Debug", "Setting Tuesday alarm in Boot.");
+                    setAlarm(2, Calendar.TUESDAY);
+                }
+                if(prefs.getBoolean(WEDNESDAY, false)) {
+                    Log.d("BD Debug", "Setting Wednesday alarm in Boot.");
+                    setAlarm(3, Calendar.WEDNESDAY);
+                }
+                if(prefs.getBoolean(THURSDAY, false)) {
+                    Log.d("BD Debug", "Setting Thursday alarm in Boot.");
+                    setAlarm(4, Calendar.THURSDAY);
+                }
+                if(prefs.getBoolean(FRIDAY, false)) {
+                    Log.d("BD Debug", "Setting Friday alarm in Boot.");
+                    setAlarm(5, Calendar.FRIDAY);
+                }
+                if(prefs.getBoolean(SATURDAY, false)) {
+                    Log.d("BD Debug", "Setting Saturday alarm in Boot.");
+                    setAlarm(6, Calendar.SATURDAY);
+                }
+            }
+        }
+    };
 }
