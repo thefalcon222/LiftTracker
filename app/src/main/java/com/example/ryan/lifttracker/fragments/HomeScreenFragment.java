@@ -1,7 +1,7 @@
 package com.example.ryan.lifttracker.fragments;
 
-import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +15,7 @@ import com.example.ryan.lifttracker.R;
 import com.example.ryan.lifttracker.constants.Constants;
 import com.example.ryan.lifttracker.database.DBConstants;
 import com.example.ryan.lifttracker.database.DBController;
+import com.example.ryan.lifttracker.email.CreateEmail;
 import com.example.ryan.lifttracker.interfaces.HomeScreenInteraction;
 
 /**
@@ -130,5 +131,16 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
             email_body.append("\n");
 
         } while (cursor.moveToNext());
+
+        //We then finish the email body
+        email_body.append("\nFrom the creators of the Hoist App:");
+        email_body.append("\nAndrew Walters\nConor Ginnell\nRyan Sullivan\nTanner Hudson");
+
+        //Finally, we call the methods in CreateEmail, sending the email
+        CreateEmail emailer = new CreateEmail(to, subject, email_body.toString());
+
+        //TODO ensure that this statement actually works
+        Intent send_email = emailer.getChooser();
+        startActivity(send_email);
     }
 }
