@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
             fragmentClass = AddWorkoutFragment.class;
 
             Log.d("HW2", "add workout fragment selected");
+        } else if(fragment_name.equals(HomeScreenFragment.TAG_HOME_FRAGMENT))
+        {
+            fragmentClass = HomeScreenFragment.class;
         }
 
         try {
