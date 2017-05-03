@@ -35,6 +35,7 @@ public class AddWorkoutFragment extends Fragment implements View.OnClickListener
     private TextView workoutReps;
     private int reps;
     private DBController database_controller;
+    private boolean isPressed;
 
     public static AddWorkoutFragment newInstance() {
         AddWorkoutFragment fragment = new AddWorkoutFragment();
@@ -67,6 +68,7 @@ public class AddWorkoutFragment extends Fragment implements View.OnClickListener
         //subtractSet = (Button) v.findViewById(R.id.subtractSet);
         fillEX = (LinearLayout) v.findViewById(R.id.exercise_container);
         workoutName = (EditText) v.findViewById(R.id.woName);
+        isPressed = false;
 
         addEx.setOnClickListener(this);
         submit.setOnClickListener(this);
@@ -80,17 +82,20 @@ public class AddWorkoutFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.addEButton:
-                LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService
-                        (view.getContext().LAYOUT_INFLATER_SERVICE);
-                View exFiller = (View) inflater.inflate(R.layout.exercise_details, null);
-                fillEX.addView(exFiller);
-                addSet = (Button) exFiller.findViewById(R.id.addSet);
-                subtractSet = (Button) exFiller.findViewById(R.id.subtractSet);
-                addSet.setOnClickListener(this);
-                subtractSet.setOnClickListener(this);
-                workoutDescription = (EditText) exFiller.findViewById(R.id.exName);
-                workoutReps = (TextView) exFiller.findViewById(R.id.repsView);
-                reps = 0;
+                if(!isPressed) {
+                    isPressed = true;
+                    LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService
+                            (view.getContext().LAYOUT_INFLATER_SERVICE);
+                    View exFiller = (View) inflater.inflate(R.layout.exercise_details, null);
+                    fillEX.addView(exFiller);
+                    addSet = (Button) exFiller.findViewById(R.id.addSet);
+                    subtractSet = (Button) exFiller.findViewById(R.id.subtractSet);
+                    addSet.setOnClickListener(this);
+                    subtractSet.setOnClickListener(this);
+                    workoutDescription = (EditText) exFiller.findViewById(R.id.exName);
+                    workoutReps = (TextView) exFiller.findViewById(R.id.repsView);
+                    reps = 0;
+                }
                 break;
             case R.id.submitWButton:
                 // Something something send to database
