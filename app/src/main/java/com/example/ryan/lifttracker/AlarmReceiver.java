@@ -33,7 +33,7 @@ public class AlarmReceiver extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("BC Debug", "AlarmReceiver received message");
+        //Log.d("BC Debug", "AlarmReceiver received message");
         Notification noti = new Notification.Builder(context)
                 .setContentTitle("Hoist")
                 .setContentText("It's Hoist! Did you work out today?")
