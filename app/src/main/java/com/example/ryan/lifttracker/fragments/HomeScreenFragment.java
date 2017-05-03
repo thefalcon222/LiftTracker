@@ -87,6 +87,7 @@ public class HomeScreenFragment extends Fragment implements View.OnClickListener
         if(view.equals(emailButton))
         {
             //activity.changeFragment(EmailFragment);
+            sendEmail();
         }
 
     }
